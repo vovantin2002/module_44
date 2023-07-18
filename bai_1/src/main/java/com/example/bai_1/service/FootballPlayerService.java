@@ -3,6 +3,9 @@ package com.example.bai_1.service;
 import com.example.bai_1.model.FootballPlayer;
 import com.example.bai_1.repository.IFootballPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +16,13 @@ public class FootballPlayerService implements IFootballPlayerService {
     private IFootballPlayerRepository iFootballPlayerRepository;
 
     @Override
-    public List<FootballPlayer> display() {
-        return iFootballPlayerRepository.findAll();
+    public Page<FootballPlayer> display(Pageable pageable) {
+        return iFootballPlayerRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<FootballPlayer> search(Pageable pageable, String name, String minDob, String maxDob) {
+        return iFootballPlayerRepository.findByDobBetween(pageable, name, minDob, maxDob);
     }
 
     @Override

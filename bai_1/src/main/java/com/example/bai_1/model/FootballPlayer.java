@@ -1,11 +1,9 @@
 package com.example.bai_1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "football_players")
 public class FootballPlayer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

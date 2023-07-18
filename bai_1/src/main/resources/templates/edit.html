@@ -8,7 +8,7 @@
 <body>
 <h1>Sửa cầu thủ</h1>
 <form action="/edit" method="post" th:object="${footballPlayer}">
-    <input type="hidden">
+    <input type="hidden" th:field="*{id}">
     <input type="text" placeholder="nhập tên cầu thủ" th:field="*{name}">
     <input type="date" placeholder="nhập ngày sinh" th:field="*{birthday}">
     <input type="text" placeholder="nhập kinh nghiệm" th:field="*{experience}">

@@ -6,13 +6,15 @@
 </head>
 <body>
 <p th:if="${msg!=null}" th:text="${msg}"></p>
-<h1><a th:href="@{/create}">Thêm mới cầu thủ</a>
+<h1><a th:href="@{/create}">Thêm mới cầu thủ</a></h1>
 <!--    <a th:href="@{/category}">Quản lý danh mục</a>-->
 <!--</h1>-->
-<!--<form th:action="@{/blog/search}" method="get">-->
-<!--    <input type="text" name="title" placeholder="nhập tên">-->
-<!--    <button type="submit">Tìm kiếm</button>-->
-<!--</form>-->
+<form th:action="@{/search}" method="post">
+    <input type="text" name="name" placeholder="nhập tên">
+    <input type="date" name="minDob" placeholder="nhập tên">
+    <input type="date" name="maxDob" placeholder="nhập tên">
+    <button type="submit">Tìm kiếm</button>
+</form>
 
 <table border="1">
     <thead>
@@ -40,11 +42,11 @@
     </tr>
     </tbody>
 </table>
-<!--<div>-->
-<!--    <a th:if="${blogList.hasPrevious()}"-->
-<!--       th:href="@{/blog(page=${blogList.number - 1})}">Previous</a>-->
-<!--    <a th:if="${blogList.hasNext()}"-->
-<!--       th:href="@{/blog(page=${blogList.number + 1})}">Next</a>-->
-<!--</div>-->
+<div>
+    <a th:if="${footballPlayerList.hasPrevious()}"
+       th:href="@{/(page=${footballPlayerList.number - 1})}">Previous</a>
+    <a th:if="${footballPlayerList.hasNext()}"
+       th:href="@{/(page=${footballPlayerList.number + 1})}">Next</a>
+</div>
 </body>
 </html>

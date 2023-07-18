@@ -2,11 +2,16 @@ package com.example.bai_1.service;
 
 import com.example.bai_1.model.FootballPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
 public interface IFootballPlayerService {
-    List<FootballPlayer> display();
+    Page<FootballPlayer> display(Pageable pageable);
+
+    Page<FootballPlayer> search(Pageable pageable, String name, String minDob, String maxDob);
 
     void add(FootballPlayer footballPlayer);
 
