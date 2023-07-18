@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:if="${msg!=null}" th:text="${msg}"></p>
+<!--<h1><a th:href="@{/blog/create}">Thêm mới blog</a>-->
+<!--    <a th:href="@{/category}">Quản lý danh mục</a>-->
+<!--</h1>-->
+<!--<form th:action="@{/blog/search}" method="get">-->
+<!--    <input type="text" name="title" placeholder="nhập tên">-->
+<!--    <button type="submit">Tìm kiếm</button>-->
+<!--</form>-->
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Mã cầu thủ</th>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Kinh nghiệm</th>
+        <th>Vị trí</th>
+        <th>Ảnh</th>
+        <th>Xóa</th>
+        <th>Sửa</th>
+        <th>Chi tiết</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="footballPlayer, iterStats: ${footballPlayerList}" th:if="${!footballPlayer.isFlag}">
+        <td th:text="${footballPlayer.id}"></td>
+        <td th:text="${footballPlayer.name}"></td>
+        <td th:text="${footballPlayer.birthday}"></td>
+        <td th:text="${footballPlayer.experience}"></td>
+        <td th:text="${footballPlayer.position}"></td>
+        <td th:text="${footballPlayer.image}"></td>
+        <td><a th:href="@{/delete/{id}(id=${footballPlayer.id})}">xóa</a></td>
+        <td><a th:href="@{/edit/{id}(id=${footballPlayer.id})}">sửa</a></td>
+        <td><a th:href="@{/detail/{id}(id=${footballPlayer.id})}">detail</a></td>
+    </tr>
+    </tbody>
+</table>
+<!--<div>-->
+<!--    <a th:if="${blogList.hasPrevious()}"-->
+<!--       th:href="@{/blog(page=${blogList.number - 1})}">Previous</a>-->
+<!--    <a th:if="${blogList.hasNext()}"-->
+<!--       th:href="@{/blog(page=${blogList.number + 1})}">Next</a>-->
+<!--</div>-->
+</body>
+</html>
