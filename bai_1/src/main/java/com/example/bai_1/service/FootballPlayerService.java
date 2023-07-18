@@ -23,6 +23,11 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
+    public void edit(FootballPlayer footballPlayer) {
+        iFootballPlayerRepository.save(footballPlayer);
+    }
+
+    @Override
     public FootballPlayer showFootballPlayerEdit(int id) {
         return iFootballPlayerRepository.findById(id).get();
     }

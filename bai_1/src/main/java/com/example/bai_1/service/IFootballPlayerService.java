@@ -10,6 +10,8 @@ public interface IFootballPlayerService {
 
     void add(FootballPlayer footballPlayer);
 
+    void edit(FootballPlayer footballPlayer);
+
     FootballPlayer showFootballPlayerEdit(int id);
 
     void delete(int id);

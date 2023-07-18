@@ -6,7 +6,7 @@
 </head>
 <body>
 <p th:if="${msg!=null}" th:text="${msg}"></p>
-<!--<h1><a th:href="@{/blog/create}">Thêm mới blog</a>-->
+<h1><a th:href="@{/create}">Thêm mới cầu thủ</a>
 <!--    <a th:href="@{/category}">Quản lý danh mục</a>-->
 <!--</h1>-->
 <!--<form th:action="@{/blog/search}" method="get">-->
@@ -22,7 +22,6 @@
         <th>Ngày sinh</th>
         <th>Kinh nghiệm</th>
         <th>Vị trí</th>
-        <th>Ảnh</th>
         <th>Xóa</th>
         <th>Sửa</th>
         <th>Chi tiết</th>
@@ -35,7 +34,6 @@
         <td th:text="${footballPlayer.birthday}"></td>
         <td th:text="${footballPlayer.experience}"></td>
         <td th:text="${footballPlayer.position}"></td>
-        <td th:text="${footballPlayer.image}"></td>
         <td><a th:href="@{/delete/{id}(id=${footballPlayer.id})}">xóa</a></td>
         <td><a th:href="@{/edit/{id}(id=${footballPlayer.id})}">sửa</a></td>
         <td><a th:href="@{/detail/{id}(id=${footballPlayer.id})}">detail</a></td>

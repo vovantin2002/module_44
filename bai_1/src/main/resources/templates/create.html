@@ -6,8 +6,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Sửa cầu thủ</h1>
-<form action="/edit" method="post" th:object="${footballPlayer}">
+<h1>Thêm mới cầu thủ</h1>
+<form action="create" method="post" th:object="${footballPlayer}">
     <input type="hidden">
     <input type="text" placeholder="nhập tên cầu thủ" th:field="*{name}">
     <input type="date" placeholder="nhập ngày sinh" th:field="*{birthday}">

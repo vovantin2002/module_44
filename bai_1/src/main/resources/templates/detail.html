@@ -23,7 +23,9 @@
         <td th:text="${footballPlayer.birthday}"></td>
         <td th:text="${footballPlayer.experience}"></td>
         <td th:text="${footballPlayer.position}"></td>
-        <td th:text="${footballPlayer.image}"></td>
+        <td>
+            <img th:src="@{${footballPlayer.image}}" alt="Ảnh cầu thủ"/>
+        </td>
     </tr>
     </tbody>
 </table>
