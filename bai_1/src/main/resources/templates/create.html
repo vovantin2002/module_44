@@ -10,10 +10,18 @@
 <form action="create" method="post" th:object="${footballPlayer}">
     <input type="hidden">
     <input type="text" placeholder="nhập tên cầu thủ" th:field="*{name}">
+    <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     <input type="date" placeholder="nhập ngày sinh" th:field="*{birthday}">
-    <input type="text" placeholder="nhập kinh nghiệm" th:field="*{experience}">
+    <span style="color: red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></span>
+    <input type="number" placeholder="nhập kinh nghiệm" th:field="*{experience}">
+    <span style="color: red" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></span>
     <input type="text" placeholder="nhập vị trí" th:field="*{position}">
+    <span style="color: red" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
     <input type="text" placeholder="nhập ảnh" th:field="*{image}">
+    <select name="team" th:field="*{team}">
+        <option value="">Chọn đội tuyển</option>
+        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+    </select>
     <input type="submit">
 </form>
 </body>

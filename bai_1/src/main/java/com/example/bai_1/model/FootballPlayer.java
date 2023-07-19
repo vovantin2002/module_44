@@ -10,15 +10,18 @@ public class FootballPlayer {
     private int id;
     private String name;
     private String birthday;
-    private String experience;
+    private int experience;
     private String position;
     private String image;
     private boolean isFlag;
+    @ManyToOne
+    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
+    private  Team team;
 
     public FootballPlayer() {
     }
 
-    public FootballPlayer(int id, String name, String birthday, String experience, String position, String image, boolean isFlag) {
+    public FootballPlayer(int id, String name, String birthday, int experience, String position, String image, boolean isFlag, Team team) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -26,6 +29,7 @@ public class FootballPlayer {
         this.position = position;
         this.image = image;
         this.isFlag = isFlag;
+        this.team = team;
     }
 
     public int getId() {
@@ -52,11 +56,11 @@ public class FootballPlayer {
         this.birthday = birthday;
     }
 
-    public String getExperience() {
+    public int getExperience() {
         return experience;
     }
 
-    public void setExperience(String experience) {
+    public void setExperience(int experience) {
         this.experience = experience;
     }
 
@@ -82,5 +86,13 @@ public class FootballPlayer {
 
     public void setFlag(boolean flag) {
         isFlag = flag;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

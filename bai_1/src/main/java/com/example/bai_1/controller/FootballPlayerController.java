@@ -1,19 +1,27 @@
 package com.example.bai_1.controller;
 
 import com.example.bai_1.model.FootballPlayer;
+import com.example.bai_1.model.FootballPlayerDto;
 import com.example.bai_1.service.IFootballPlayerService;
+import com.example.bai_1.service.ITeamService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 public class FootballPlayerController {
     @Autowired
     private IFootballPlayerService iFootballPlayerService;
+    @Autowired
+    private ITeamService iTeamService;
 
     @GetMapping("")
     public String display(@PageableDefault(size = 2, sort = "name") Pageable pageable, Model model) {
@@ -34,19 +42,20 @@ public class FootballPlayerController {
 
     @GetMapping("/create")
     public String showFormCreate(Model model) {
-        FootballPlayer footballPlayer = new FootballPlayer();
-        model.addAttribute("footballPlayer", footballPlayer);
+        FootballPlayerDto footballPlayerDto = new FootballPlayerDto();
+        model.addAttribute("teams", iTeamService.display());
+        model.addAttribute("footballPlayer", footballPlayerDto);
         return "create";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id, Model model) {
+    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (iFootballPlayerService.showFootballPlayerEdit(id) == null) {
-            model.addAttribute("msg", "Không tìm thấy id. ");
+            redirectAttributes.addAttribute("msg", "Không tìm thấy id. ");
             return "list";
         }
         iFootballPlayerService.delete(id);
-        model.addAttribute("msg", "Xóa thành công");
+        redirectAttributes.addAttribute("msg", "Xóa thành công");
         return "redirect:/";
     }
 
@@ -56,30 +65,39 @@ public class FootballPlayerController {
             model.addAttribute("msg", "Không tìm thấy id. ");
             return "list";
         }
+        model.addAttribute("teams", iTeamService.display());
         FootballPlayer footballPlayer = iFootballPlayerService.showFootballPlayerEdit(id);
         model.addAttribute("footballPlayer", footballPlayer);
         return "edit";
     }
 
     @PostMapping("create")
-    public String create(@ModelAttribute FootballPlayer footballPlayer, Model model) {
-        if (footballPlayer == null) {
-            model.addAttribute("msg", "Đối tượng không tồn tại. ");
+    public String create(@Valid @ModelAttribute("footballPlayer") FootballPlayerDto footballPlayerDto,
+                         BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        new FootballPlayerDto().validate(footballPlayerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("teams", iTeamService.display());
             return "create";
         }
+        if (footballPlayerDto == null) {
+            redirectAttributes.addAttribute("msg", "Đối tượng không tồn tại. ");
+            return "create";
+        }
+        FootballPlayer footballPlayer = new FootballPlayer();
+        BeanUtils.copyProperties(footballPlayerDto, footballPlayer);
         iFootballPlayerService.add(footballPlayer);
-        model.addAttribute("msg", "Thêm mới thành công ");
+        redirectAttributes.addAttribute("msg", "Thêm mới thành công ");
         return "redirect:/";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute FootballPlayer footballPlayer, Model model) {
+    public String edit(@ModelAttribute FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
         if (footballPlayer == null) {
-            model.addAttribute("msg", "Đối tượng không tồn tại. ");
+            redirectAttributes.addAttribute("msg", "Đối tượng không tồn tại. ");
             return "edit";
         }
         iFootballPlayerService.edit(footballPlayer);
-        model.addAttribute("msg", "Sửa thành công ");
+        redirectAttributes.addAttribute("msg", "Sửa thành công ");
         return "redirect:/";
     }
 
