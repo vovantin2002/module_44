@@ -14,14 +14,16 @@ public class FootballPlayer {
     private String position;
     private String image;
     private boolean isFlag;
+    private String status = "Dự bị";
     @ManyToOne
-    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
-    private  Team team;
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
+    private Team team;
 
     public FootballPlayer() {
     }
 
-    public FootballPlayer(int id, String name, String birthday, int experience, String position, String image, boolean isFlag, Team team) {
+    public FootballPlayer(int id, String name, String birthday, int experience, String position, String image,
+                          boolean isFlag, String status, Team team) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -29,6 +31,7 @@ public class FootballPlayer {
         this.position = position;
         this.image = image;
         this.isFlag = isFlag;
+        this.status = status;
         this.team = team;
     }
 
@@ -86,6 +89,14 @@ public class FootballPlayer {
 
     public void setFlag(boolean flag) {
         isFlag = flag;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Team getTeam() {

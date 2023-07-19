@@ -25,6 +25,9 @@
         <th>Kinh nghiệm</th>
         <th>Vị trí</th>
         <th>Đội tuyển</th>
+        <th>Trạng thái</th>
+        <th>Thao tác</th>
+        <th></th>
         <th>Xóa</th>
         <th>Sửa</th>
         <th>Chi tiết</th>
@@ -38,6 +41,9 @@
         <td th:text="${footballPlayer.experience}"></td>
         <td th:text="${footballPlayer.position}"></td>
         <td th:text="${footballPlayer.team.name}"></td>
+        <td th:text="${footballPlayer.status}"></td>
+        <td><a th:href="@{/register/{id}(id=${footballPlayer.id})}">Đăng ký đá</a></td>
+        <td><a th:href="@{/cancel/{id}(id=${footballPlayer.id})}">Hủy đăng ký</a></td>
         <td><a th:href="@{/delete/{id}(id=${footballPlayer.id})}">xóa</a></td>
         <td><a th:href="@{/edit/{id}(id=${footballPlayer.id})}">sửa</a></td>
         <td><a th:href="@{/detail/{id}(id=${footballPlayer.id})}">detail</a></td>

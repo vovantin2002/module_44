@@ -6,6 +6,7 @@ import com.example.bai_1.service.IFootballPlayerService;
 import com.example.bai_1.service.ITeamService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class FootballPlayerController {
@@ -46,6 +48,32 @@ public class FootballPlayerController {
         model.addAttribute("teams", iTeamService.display());
         model.addAttribute("footballPlayer", footballPlayerDto);
         return "create";
+    }
+
+    @GetMapping("/register/{id}")
+    public String register(@PathVariable int id) {
+        FootballPlayer footballPlayer = iFootballPlayerService.showFootballPlayerEdit(id);
+        footballPlayer.setStatus("Đã đăng ký");
+        List<FootballPlayer> footballPlayers = iFootballPlayerService.list();
+        int cout = 0;
+        for (int i = 0; i < footballPlayers.size(); i++) {
+            if (footballPlayers.get(i).getStatus().equals("Đã đăng ký")) {
+                cout++;
+            }
+        }
+        if (cout > 11) {
+            throw new RuntimeException("cầu thủ tối đa là 11");
+        }
+        iFootballPlayerService.edit(footballPlayer);
+        return "redirect:/";
+    }
+
+    @GetMapping("/cancel/{id}")
+    public String cancelRegister(@PathVariable int id) {
+        FootballPlayer footballPlayer = iFootballPlayerService.showFootballPlayerEdit(id);
+        footballPlayer.setStatus("Dự bị");
+        iFootballPlayerService.edit(footballPlayer);
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")

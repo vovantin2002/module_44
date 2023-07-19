@@ -21,6 +21,11 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
+    public List<FootballPlayer> list() {
+        return iFootballPlayerRepository.findAll();
+    }
+
+    @Override
     public Page<FootballPlayer> search(Pageable pageable, String name, String minDob, String maxDob) {
         return iFootballPlayerRepository.findByDobBetween(pageable, name, minDob, maxDob);
     }

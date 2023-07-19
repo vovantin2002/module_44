@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IFootballPlayerService {
     Page<FootballPlayer> display(Pageable pageable);
+    List<FootballPlayer> list();
 
     Page<FootballPlayer> search(Pageable pageable, String name, String minDob, String maxDob);
 
