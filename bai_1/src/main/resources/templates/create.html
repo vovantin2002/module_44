@@ -18,7 +18,7 @@
     <input type="text" placeholder="nhập vị trí" th:field="*{position}">
     <span style="color: red" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
     <input type="text" placeholder="nhập ảnh" th:field="*{image}">
-    <select name="team" th:field="*{team}">
+    <select th:field="*{team}">
         <option value="">Chọn đội tuyển</option>
         <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
     </select>

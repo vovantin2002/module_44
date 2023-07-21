@@ -7,8 +7,11 @@
 <body>
 <p th:if="${msg!=null}" th:text="${msg}"></p>
 <h1><a th:href="@{/create}">Thêm mới cầu thủ</a></h1>
-<!--    <a th:href="@{/category}">Quản lý danh mục</a>-->
-<!--</h1>-->
+<form action="" method="get">
+    nhập số trang hiển thị <input type="number" name="a">
+    <button type="submit">gửi</button>
+</form>
+
 <form th:action="@{/search}" method="post">
     <input type="text" name="name" placeholder="nhập tên">
     <input type="date" name="minDob" placeholder="nhập tên">

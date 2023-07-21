@@ -7,6 +7,7 @@ import com.example.bai_1.service.ITeamService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class FootballPlayerController {
@@ -26,9 +28,11 @@ public class FootballPlayerController {
     private ITeamService iTeamService;
 
     @GetMapping("")
-    public String display(@PageableDefault(size = 2, sort = "name") Pageable pageable, Model model) {
-//        Sort sort = pageable.getSort().and(Sort.by("birthday").descending());
-        model.addAttribute("footballPlayerList", iFootballPlayerService.display(pageable));
+    public String display(@RequestParam("a") Optional<Integer> pageSize,
+                          @PageableDefault(size = 20, sort = "name") Pageable pageable, Model model) {
+        int size = pageSize.orElse(20);
+        Pageable updatedPageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
+        model.addAttribute("footballPlayerList", iFootballPlayerService.display(updatedPageable));
         return "list";
     }
 
@@ -69,8 +73,12 @@ public class FootballPlayerController {
     }
 
     @GetMapping("/cancel/{id}")
-    public String cancelRegister(@PathVariable int id) {
+    public String cancelRegister(@PathVariable int id, RedirectAttributes redirectAttributes) {
         FootballPlayer footballPlayer = iFootballPlayerService.showFootballPlayerEdit(id);
+        if (footballPlayer == null) {
+            redirectAttributes.addAttribute("msg", "Không tìm thấy id. ");
+            return "list";
+        }
         footballPlayer.setStatus("Dự bị");
         iFootballPlayerService.edit(footballPlayer);
         return "redirect:/";
