@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Danh sách cầu thủ yêu thích </h1>
+<table th:if="${favorites!=null && favorites.getFootballPlayerIntegerMap().size()>0}">
+    <thead>
+    <tr>
+        <th>Mã cầu thủ</th>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Kinh nghiệm</th>
+        <th>Vị trí</th>
+        <th>Ảnh</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each=" favoritesMap: ${favorites.footballPlayerIntegerMap}">
+        <td th:text="${favoritesMap.key.id}"></td>
+        <td th:text="${favoritesMap.key.name}"></td>
+        <td th:text="${favoritesMap.key.birthday}"></td>
+        <td th:text="${favoritesMap.key.experience}"></td>
+        <td th:text="${favoritesMap.key.position}"></td>
+        <td th:text="${favoritesMap.key.name}"></td>
+        <td>
+            <img th:src="@{${favoritesMap.key.image}}" alt="Ảnh cầu thủ"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,12 +1,12 @@
 package com.example.bai_1.controller;
 
+import com.example.bai_1.model.Favorites;
 import com.example.bai_1.model.FootballPlayer;
 import com.example.bai_1.model.FootballPlayerDto;
 import com.example.bai_1.service.IFootballPlayerService;
 import com.example.bai_1.service.ITeamService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,18 +21,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("favorites")
 public class FootballPlayerController {
     @Autowired
     private IFootballPlayerService iFootballPlayerService;
     @Autowired
     private ITeamService iTeamService;
 
+    @ModelAttribute("favorites")
+    public Favorites initFavorites() {
+        return new Favorites();
+    }
+
     @GetMapping("")
-    public String display(@RequestParam("a") Optional<Integer> pageSize,
-                          @PageableDefault(size = 20, sort = "name") Pageable pageable, Model model) {
-        int size = pageSize.orElse(20);
+    public String display(@RequestParam(value = "msg", required = false) String msg, @RequestParam("a") Optional<Integer> pageSize,
+                          @PageableDefault(size = 4, sort = "name") Pageable pageable, Model model) {
+        int size = pageSize.orElse(4);
         Pageable updatedPageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
         model.addAttribute("footballPlayerList", iFootballPlayerService.display(updatedPageable));
+        model.addAttribute("msg", msg);
         return "list";
     }
 
@@ -52,6 +59,20 @@ public class FootballPlayerController {
         model.addAttribute("teams", iTeamService.display());
         model.addAttribute("footballPlayer", footballPlayerDto);
         return "create";
+    }
+
+    @GetMapping("/favorites/{id}")
+    public String addFavorites(@PathVariable int id, @SessionAttribute(value = "favorites") Favorites favorites) {
+        FootballPlayer footballPlayer = iFootballPlayerService.showFootballPlayerEdit(id);
+        if (footballPlayer != null) {
+            favorites.addFootballPlayer(footballPlayer);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/favoritesList")
+    public String favoritesList() {
+        return "favorites";
     }
 
     @GetMapping("/register/{id}")

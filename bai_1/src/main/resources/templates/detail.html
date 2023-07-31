@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -26,6 +26,7 @@
         <td>
             <img th:src="@{${footballPlayer.image}}" alt="Ảnh cầu thủ"/>
         </td>
+        <td><a th:href="@{/favorites/{id}(id=${footballPlayer.id})}">Yêu thích</a></td>
     </tr>
     </tbody>
 </table>
