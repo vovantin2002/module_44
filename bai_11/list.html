@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>STT</th>
+    <th>Tên</th>
+    <th>Ngày sinh</th>
+    <th>Vị trí</th>
+    <th>Kinh nghiệm</th>
+  </tr>
+  </thead>
+  <tbody id="playerList">
+  </tbody>
+</table>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  function display() {
+    var element = "";
+    $.ajax({
+      contentType:"application/json",
+      method: "GET",
+      dataType:"json",
+      url: "http://localhost:8080/",
+      success: function (footballPlayerList) {
+        for (let i = 0; i < footballPlayerList.length; i++) {
+          element += `
+                <tr>
+                <th scope="row">${i + 1}</th>
+                    <td>${footballPlayerList[i].name}</td>
+                    <td>${footballPlayerList[i].birthday}</td>
+                    <td>${footballPlayerList[i].position}</td>
+                    <td>${footballPlayerList[i].experience}</td>
+                </tr>`;
+        }
+        $('#playerList').html(element);
+      },
+      error : function (err) {
+        console.log(err);
+
+      }
+    });
+  }
+    display();
+</script>
+</body>
+</html>
